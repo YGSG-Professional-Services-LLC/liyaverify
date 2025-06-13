@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Email Verification</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
@@ -22,21 +23,36 @@
       }
 
       .message-box {
-        max-width: 400px;
-        padding: 2rem;
+        max-width: 90%;
+        width: 480px;
+        padding: 2.5rem;
         background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
       }
 
       h2 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
+        font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
       p {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 1.25rem;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 480px) {
+        .message-box {
+          padding: 3rem 1.5rem;
+        }
+
+        h2 {
+          font-size: 2.2rem;
+        }
+
+        p {
+          font-size: 1.4rem;
+        }
       }
     </style>
     <script>
@@ -58,7 +74,7 @@
           try {
             await firebase.auth().applyActionCode(oobCode);
             box.innerHTML = `
-              <h2>✅ Email Verified!</h2>
+              <h2>✅ Email Verified</h2>
               <p>Return to the LIYA app for fun career games!</p>
             `;
           } catch (err) {
