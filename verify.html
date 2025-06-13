@@ -1,9 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Email Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #01b0d1;
+        font-family: 'Inter', sans-serif;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        flex-direction: column;
+      }
+
+      .message-box {
+        max-width: 400px;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+    </style>
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyB3-i8l0PqfSrcREHIMa2yqykCoVce7FL0",
@@ -17,26 +52,35 @@
         const mode = params.get("mode");
         const oobCode = params.get("oobCode");
 
-        console.log("Mode:", mode);
-        console.log("oobCode:", oobCode);
+        const box = document.querySelector(".message-box");
 
         if (mode === "verifyEmail" && oobCode) {
           try {
             await firebase.auth().applyActionCode(oobCode);
-            console.log("✅ Email verified successfully.");
-            document.body.innerHTML = "<h2>Email successfully verified!</h2>";
+            box.innerHTML = `
+              <h2>✅ Email Verified!</h2>
+              <p>Return to the LIYA app for fun career games!</p>
+            `;
           } catch (err) {
-            console.error("❌ Failed to verify email", err);
-            document.body.innerHTML = "<h2>Failed to verify email. Please try again or contact support.</h2>";
+            console.error("Verification error", err);
+            box.innerHTML = `
+              <h2>⚠️ Verification Failed</h2>
+              <p>Please try again later or contact support.</p>
+            `;
           }
         } else {
-          document.body.innerHTML = "<h2>Invalid verification link.</h2>";
+          box.innerHTML = `
+            <h2>🚫 Invalid Link</h2>
+            <p>This verification link appears to be invalid or expired.</p>
+          `;
         }
       };
     </script>
   </head>
   <body>
-    <h2>Verifying your email...</h2>
-    <h2>V2</h2>
+    <div class="message-box">
+      <h2>Verifying your email...</h2>
+      <p>Please wait while we confirm your email address.</p>
+    </div>
   </body>
 </html>
