@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Email Verification</title>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB3-i8l0PqfSrcREHIMa2yqykCoVce7FL0",
+        authDomain: "  wordgame-95d8a.firebaseapp.com",
+        projectId: "wordgame-95d8a"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      window.onload = async () => {
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get("mode");
+        const oobCode = params.get("oobCode");
+
+        if (mode === "verifyEmail" && oobCode) {
+          try {
+            await firebase.auth().applyActionCode(oobCode);
+            document.body.innerHTML = "<h2>Email successfully verified!</h2>";
+          } catch (err) {
+            console.error(err);
+            document.body.innerHTML = "<h2>Verification failed.</h2>";
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <h2>Verifying your email...</h2>
+  </body>
+</html>
